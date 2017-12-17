@@ -1,0 +1,20 @@
+bin/
+build/
+dist/
+nbproject/
+store/
+
+# For intellij
+.idea
+*.iml
+out/
+
+# For Dolphin (KDE Linux)
+.directory
+
+# For testing files
+Test*
+
+# For NetBeans
+.classpath
+.project
