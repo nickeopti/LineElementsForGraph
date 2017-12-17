@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lineelementsforgraph;
 
 import java.awt.Desktop;
@@ -25,8 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
- *
- * @author nicke
+ * @author Nicklas Boserup
  */
 public class LineElementsForGraph extends Application {
     

@@ -7,7 +7,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 /**
- * @author nicke
+ * @author Nicklas Boserup
  */
 public class NumSetLink {
     

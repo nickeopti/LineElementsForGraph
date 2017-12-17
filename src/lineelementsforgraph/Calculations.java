@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package lineelementsforgraph;
 
 import java.io.File;
@@ -11,8 +6,7 @@ import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
 /**
- *
- * @author nicke
+ * @author Nicklas Boserup
  */
 public class Calculations {
     
