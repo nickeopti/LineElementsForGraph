@@ -30,11 +30,11 @@ public class Calculations {
         graph = new GraphWriter(this.file);
     }
     
-    public void addTangentLine(double x_0, double y_0) {
+    public void addTangentLine(double x_0, double y_0, double length) {
         double a;
         try {
-        Expression ex = new ExpressionBuilder(function).variables(x_var, y_var).build().setVariable(x_var, x_0).setVariable(y_var, y_0);
-        a = ex.evaluate();
+            Expression ex = new ExpressionBuilder(function).variables(x_var, y_var).build().setVariable(x_var, x_0).setVariable(y_var, y_0);
+            a = ex.evaluate();
         } catch(ArithmeticException ae) {return;}
         
         double d = Math.abs(Math.sqrt(a*a+1) * (length / (a*a + 1)));
@@ -64,9 +64,12 @@ public class Calculations {
         
         if(upperRight.getX() <= lowerLeft.getX() || upperRight.getY() <= lowerLeft.getY())
             return;
+
+        double l = (upperRight.getX() - lowerLeft.getX()) / x_num * length;
+
         for(int x = 0; x < x_num; x++) {
             for(int y = 0; y < y_num; y++) {
-                addTangentLine((upperRight.getX()-lowerLeft.getX())/(x_num-1)*x+lowerLeft.getX(), (upperRight.getY()-lowerLeft.getY())/(y_num-1)*y+lowerLeft.getY());
+                addTangentLine((upperRight.getX()-lowerLeft.getX())/(x_num-1)*x+lowerLeft.getX(), (upperRight.getY()-lowerLeft.getY())/(y_num-1)*y+lowerLeft.getY(), l);
             }
         }
         graph.writeGraphFile();

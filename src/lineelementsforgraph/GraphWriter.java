@@ -65,22 +65,8 @@ public class GraphWriter {
                     "MinVersion = 2.5\n" +
                     "OS = Windows XP 5.1 Service Pack 3\n" +
                     "\n" +
-                    "[Axes]\n" +
-                    "xMin = -10\n" +
-                    "xMax = 10\n" +
-                    "xTickUnit = 1\n" +
-                    "xGridUnit = 2\n" +
-                    "yMin = -10\n" +
-                    "yMax = 10\n" +
-                    "yTickUnit = 1\n" +
-                    "yGridUnit = 2\n" +
-                    "AxesColor = clBlue\n" +
-                    "GridColor = 0x00FF9999\n" +
-                    "ShowLegend = 0\n" +
-                    "Radian = 1\n" +
-                    "\n" +
                     "[PointSeries1]\n" +
-                    "FillColor = clRed\n" +
+                    "FillColor = clNavy\n" +
                     "LineColor = clBlue\n" +
                     "Size = 2\n" +
                     "Style = 0\n" +
@@ -88,6 +74,20 @@ public class GraphWriter {
                     "PointCount = 1\n" +
                     "Points = 0,0;\n" +
                     "LegendText = Series 1\n" +
+                    "\n" +
+                    "[Axes]\n" +
+                    "xMin = -2\n" +
+                    "xMax = 10\n" +
+                    "xTickUnit = 1\n" +
+                    "xGridUnit = 2\n" +
+                    "yMin = -2\n" +
+                    "yMax = 10\n" +
+                    "yTickUnit = 1\n" +
+                    "yGridUnit = 2\n" +
+                    "AxesColor = clBlack\n" +
+                    "GridColor = 0x00FF9999\n" +
+                    "ShowLegend = 0\n" +
+                    "Radian = 1\n" +
                     "\n" +
                     "[Data]\n" +
                     "TextLabelCount = 0\n" +
@@ -102,7 +102,7 @@ public class GraphWriter {
     }
     
     public boolean appendNewFunctionToGraph(String func, double from, double to) {
-        return appendNewFunctionToGraph(func, from, to, "clBlue");
+        return appendNewFunctionToGraph(func, from, to, "clBlack");
     }
     
     public boolean appendNewFunctionToGraph(String func, double from, double to, String color) {
@@ -110,7 +110,7 @@ public class GraphWriter {
         
         int index;
         int funcCount = 1;
-        for(index = 0; index < lines.size() && !lines.get(index).startsWith("[PointSeries") ; index++) {
+        for(index = 0; index < lines.size() && !lines.get(index).startsWith("[Axes]") ; index++) {
             if(lines.get(index).startsWith("[Func"))
                 funcCount++;
         }
@@ -118,6 +118,7 @@ public class GraphWriter {
         String toInsert = "[Func" + funcCount + "]\n"
                 + "FuncType = 0\n"
                 + "y = " + func + "\n"
+                + "LegendText = auto-generated\n"
                 + "From = " + from + "\n"
                 + "To = " + to + "\n"
                 + "Color = " + color;
@@ -162,7 +163,7 @@ public class GraphWriter {
             //if(line.equals(";auto-generated"))
             if(line.startsWith("[Func"))
                 sameFunction = true;
-            if(sameFunction)
+            if(sameFunction && lines.get(i+3).endsWith("auto-generated"))
                 lines.remove(i--);
             if(line.trim().isEmpty())
                 sameFunction = false;
@@ -188,7 +189,7 @@ public class GraphWriter {
         } else {
             for(index = 0; index < lines.size() && !lines.get(index).startsWith("[Data") ; index++);
             String toInsert = "[PointSeries1]\n"
-                    + "FillColor = clRed\n"
+                    + "FillColor = clNavy\n"
                     + "LineColor = clBlue\n"
                     + "Size = 3\n"
                     + "Style = 0\n"
