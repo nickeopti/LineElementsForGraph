@@ -1,5 +1,6 @@
 package lineelementsforgraph;
 
+import com.proudapes.jlatexmathfx.Control.LateXMathControl;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Priority;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -66,16 +68,21 @@ public class LineElementsForGraph extends Application {
         root.add(largeLabel("Funktion", 3), 0, rowIndex++, 3, 1);
         TextField function = new TextField();
         function.setPromptText("differential-ligning...");
-        root.add(new Label("dy/dx = "), 0, rowIndex);
+        //root.add(new Label("dy/dx = "), 0, rowIndex);
+        final LateXMathControl dydx = latexLabel("\\frac{dy}{dx} =");
+        root.add(dydx, 0, rowIndex);
         root.add(function, 1, rowIndex++, 2, 1);
-        TextField x_var = new TextField();
+        TextField x_var = new TextField("x");
         x_var.setPromptText("x");
         root.add(new Label("x-variabel"), 0, rowIndex);
         root.add(x_var, 1, rowIndex++, 2, 1);
-        TextField y_var = new TextField();
+        TextField y_var = new TextField("y");
         y_var.setPromptText("y");
         root.add(new Label("y-variabel"), 0, rowIndex);
         root.add(y_var, 1, rowIndex++, 2, 1);
+        
+        x_var.textProperty().addListener((ob, o, n) -> dydx.setFormula("\\frac{d"+y_var.getText()+"}{d"+n+"}="));
+        y_var.textProperty().addListener((ob, o, n) -> dydx.setFormula("\\frac{d"+n+"}{d"+x_var.getText()+"}="));
         
         root.add(new Separator(), 0, rowIndex++, 3, 1);
         root.add(largeLabel("Antal linjeelementer", 3), 0, rowIndex++, 3, 1);
@@ -86,9 +93,9 @@ public class LineElementsForGraph extends Application {
         
         root.add(new Separator(), 0, rowIndex++, 3, 1);
         root.add(largeLabel("Indstillinger for linjeelementer", 3), 0, rowIndex++, 3, 1);
-        NumSetLink lineLength = new NumSetLink("Længde", 0.1, 5, 1.5, false);
+        NumSetLink lineLength = new NumSetLink("Længde", 0.1, 2, 1, false);
         root.addRow(rowIndex++, lineLength.label, lineLength.slider, lineLength.textField);
-        NumSetLink pointSize = new NumSetLink("Punktstørrelse", 0, 5, 2, true);
+        NumSetLink pointSize = new NumSetLink("Punktstørrelse", 0, 5, 1, true);
         root.addRow(rowIndex++, pointSize.label, pointSize.slider, pointSize.textField);
         
         root.add(new Separator(), 0, rowIndex++, 3, 1);
@@ -115,10 +122,11 @@ public class LineElementsForGraph extends Application {
         
         
         
-        Scene scene = new Scene(root, 350, 450);
+        Scene scene = new Scene(root);
         
         primaryStage.setTitle("LinjeElementer");
         primaryStage.setScene(scene);
+        primaryStage.sizeToScene();
         primaryStage.show();
     }
 
@@ -140,6 +148,14 @@ public class LineElementsForGraph extends Application {
         Label l = new Label(label);
         l.setFont(new Font(l.getFont().getName(), l.getFont().getSize()+size));
         return l;
+    }
+    
+    private LateXMathControl latexLabel(String latex) {
+        LateXMathControl control = new LateXMathControl(latex);
+        control.setPrefWidth(0);
+        control.setPrefHeight(0);
+        control.setTextColor(Color.WHITE);
+        return control;
     }
     
 }
